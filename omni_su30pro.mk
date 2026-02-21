@@ -15,6 +15,9 @@ $(call inherit-product, vendor/omni/config/common.mk)
 # Inherit from su30pro device
 $(call inherit-product, device/iflytek/su30pro/device.mk)
 
+# Inherit BoardConfig (required for TWRP)
+$(call inherit-product, device/iflytek/su30pro/BoardConfig.mk)
+
 PRODUCT_DEVICE := su30pro
 PRODUCT_NAME := omni_su30pro
 PRODUCT_BRAND := iFLYTEK
