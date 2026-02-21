@@ -19,7 +19,7 @@ $(call inherit-product, device/iflytek/su30pro/device.mk)
 $(call inherit-product, device/iflytek/su30pro/BoardConfig.mk)
 
 PRODUCT_DEVICE := su30pro
-PRODUCT_NAME := omni_su30pro
+PRODUCT_NAME := twrp_su30pro
 PRODUCT_BRAND := iFLYTEK
 PRODUCT_MODEL := rk3588s_su30pro_native
 PRODUCT_MANUFACTURER := iflytek
