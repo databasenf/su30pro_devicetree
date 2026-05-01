@@ -1,11 +1,7 @@
-# 继承 AOSP 基础配置
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_64bit_hw.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
-
-# 继承 TWRP 通用配置
+# 继承 TWRP 通用配置 (核心)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
-# 包含你的设备特定配置
+# 包含你的设备特定配置 (device.mk)
 $(call inherit-product, device/iflytek/su30pro/device.mk)
 
 # 产品定义
