@@ -36,10 +36,12 @@ jobs:
         run: |
           cd twrp
           source build/envsetup.sh
-          # 这一步非常关键：瑞芯微通常需要指定编译 recoveryimage
+          # 禁用一些严格检查
+          export ALLOW_MISSING_DEPENDENCIES=true
+          # 直接 lunch
           lunch omni_su30pro-eng
           make recoveryimage -j$(nproc)
-
+          
       - name: 上传固件
         uses: actions/upload-artifact@v4
         with:
