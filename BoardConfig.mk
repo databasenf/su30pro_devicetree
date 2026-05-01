@@ -61,8 +61,8 @@ TARGET_KERNEL_SOURCE := kernel/iflytek/su30pro
 # Kernel - prebuilt
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+TARGET_PREBUILT_KERNEL := device/iflytek/su30pro/prebuilt/kernel
+TARGET_PREBUILT_DTB := device/iflytek/su30pro/prebuilt/dtb.img
 BOARD_PREBUILT_DTBOIMAGE := device/iflytek/su30pro/prebuilt/dtbo.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB) --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 endif
