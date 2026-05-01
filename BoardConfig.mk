@@ -107,3 +107,31 @@ TW_SCREEN_BLANK_ON_BOOT := true
 TW_USE_TOOLBOX := true
 TW_INCLUDE_NTFS_3G := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/backlight/brightness"
+
+# --- 强制定义预编译文件规则 (解决 Ninja Missing Rule) ---
+
+# 定义路径变量
+PREBUILT_DIR := $(DEVICE_PATH)/prebuilt
+
+# 1. 内核规则
+$(PRODUCT_OUT)/kernel: $(PREBUILT_DIR)/kernel
+	@mkdir -p $(dir $@)
+	@cp -fp $< $@
+
+# 2. DTB 规则
+$(PRODUCT_OUT)/dtb.img: $(PREBUILT_DIR)/dtb.img
+	@mkdir -p $(dir $@)
+	@cp -fp $< $@
+
+# 3. DTBO 规则 (如果你的设备有 DTBO)
+$(PRODUCT_OUT)/dtbo.img: $(PREBUILT_DIR)/dtbo.img
+	@mkdir -p $(dir $@)
+	@cp -fp $< $@
+
+# 让编译系统知道这些文件已经“存在”了
+INSTALLED_KERNEL_TARGET := $(PRODUCT_OUT)/kernel
+INSTALLED_DTBIMAGE_TARGET := $(PRODUCT_OUT)/dtb.img
+BOARD_PREBUILT_DTBOIMAGE := $(PRODUCT_OUT)/dtbo.img
+
+# 确保 mkbootimg 工具能找到它们
+BOARD_MKBOOTIMG_ARGS += --dtb $(INSTALLED_DTBIMAGE_TARGET)
