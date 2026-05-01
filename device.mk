@@ -1,9 +1,9 @@
 LOCAL_PATH := device/iflytek/su30pro
 
 # 告诉系统将预编译文件拷贝到 TARGET_OUT_INTERMEDIATES 目录，供生成镜像使用
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/kernel:kernel \
-    $(LOCAL_PATH)/prebuilt/dtb.img:dtb.img \
+# PRODUCT_COPY_FILES += \
+    # $(LOCAL_PATH)/prebuilt/kernel:kernel \
+    # $(LOCAL_PATH)/prebuilt/dtb.img:dtb.img \
     # $(LOCAL_PATH)/prebuilt/dtbo.img:dtbo.img
 
 # 拷贝 recovery.fstab
