@@ -36,6 +36,13 @@ jobs:
         run: |
           cd twrp
           source build/envsetup.sh
+          # 1. 选择编译目标
+          lunch omni_su30pro-eng
+          # 2. 关键补丁：手动创建缺失的 root 目录，防止 rsync 报错
+          mkdir -p out/target/product/su30pro/root
+          # 3. 设置强制变量并开始编译
+          export ALLOW_MISSING_DEPENDENCIES=true
+          make recoveryimage -j$(nproc)
           # 禁用一些严格检查
           export ALLOW_MISSING_DEPENDENCIES=true
           # 直接 lunch
