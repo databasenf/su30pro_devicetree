@@ -4,7 +4,7 @@ LOCAL_PATH := device/iflytek/su30pro
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/kernel:kernel \
     $(LOCAL_PATH)/prebuilt/dtb.img:dtb.img \
-    $(LOCAL_PATH)/prebuilt/dtbo.img:dtbo.img
+    # $(LOCAL_PATH)/prebuilt/dtbo.img:dtbo.img
 
 # 拷贝 recovery.fstab
 PRODUCT_COPY_FILES += \
