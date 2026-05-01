@@ -1,0 +1,47 @@
+name: Recovery Build
+
+on:
+  workflow_dispatch: # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: 准备编译环境
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bc build-essential gperf zip curl libxml2-utils adb postscript
+
+      - name: 安装 Repo 工具
+        run: |
+          mkdir ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "PATH=$HOME/bin:$PATH" >> $GITHUB_ENV
+
+      - name: 初始化 TWRP 源码
+        run: |
+          mkdir twrp
+          cd twrp
+          # 使用 12.1 分支
+          repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
+          repo sync -j$(nproc) --force-sync
+
+      - name: 拉取你的设备树
+        run: |
+          # 将你的仓库克隆到指定的 device 路径
+          git clone ${{ github.server_url }}/${{ github.repository }} twrp/device/iflytek/su30pro
+
+      - name: 编译命令
+        run: |
+          cd twrp
+          source build/envsetup.sh
+          # 这一步非常关键：瑞芯微通常需要指定编译 recoveryimage
+          lunch twrp_su30pro-eng || lunch omni_su30pro-eng
+          make recoveryimage -j$(nproc)
+
+      - name: 上传固件
+        uses: actions/upload-artifact@v4
+        with:
+          name: TWRP-RK3588S-SU30PRO
+          path: twrp/out/target/product/su30pro/recovery.img
