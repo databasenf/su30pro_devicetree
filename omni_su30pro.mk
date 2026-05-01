@@ -1,3 +1,5 @@
+TARGET_SUPPORTS_64_BIT_APPS := true
+
 # 继承 TWRP 通用配置 (核心)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
