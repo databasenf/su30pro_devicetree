@@ -37,7 +37,7 @@ jobs:
           cd twrp
           source build/envsetup.sh
           # 这一步非常关键：瑞芯微通常需要指定编译 recoveryimage
-          lunch twrp_su30pro-eng || lunch omni_su30pro-eng
+          lunch omni_su30pro-eng
           make recoveryimage -j$(nproc)
 
       - name: 上传固件
