@@ -10,11 +10,9 @@ DEVICE_PATH := device/iflytek/su30pro
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
-# Architecture
+# --- 架构与内核基址 ---
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
-TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
 
 # 必须声明二次架构（32位支持），否则 AOSP 会认为配置不完整
@@ -43,10 +41,12 @@ TARGET_SCREEN_HEIGHT := 3024
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 
 # Kernel
-BOARD_BOOTIMG_HEADER_VERSION := 2
+BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x10000000
-BOARD_KERNEL_CMDLINE := console=ttyFIQ0 firmware_class.path=/vendor/etc/firmware init=/init rootwait ro loop.max_part=7 androidboot.console=ttyFIQ0 androidboot.hardware=rk30board androidboot.boot_devices=fe2e0000.mmc,fe180000.pcie androidboot.storagemedia=nvme androidboot.selinux=permissive
-BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_CMDLINE :=console=ttyFIQ0 firmware_class.path=/vendor/etc/firmware init=/init rootwait ro loop.max_part=7 androidboot.console=ttyFIQ0 androidboot.wificountrycode=CN androidboot.hardware=rk30board androidboot.boot_devices=fe2e0000.mmc,fe180000.pcie androidboot.selinux=permissive
+
+# --- 盲推启动头参数（Android 12 + vendor_boot 标准配置） ---
+BOARD_KERNEL_PAGESIZE := 4096
 BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
@@ -68,6 +68,13 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 endif
+
+# --- 系统版本对齐 ---
+BOARD_OS_VERSION := 12.0.0
+BOARD_OS_PATCH_LEVEL := 2022-06
+
+# --- 分区类型声明 ---
+BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)

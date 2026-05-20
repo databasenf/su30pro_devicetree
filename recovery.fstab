@@ -1,19 +1,24 @@
-# mount_point   fstype     device                                               flags
-/system         ext4       system                                               display="System";logical;first_stage_mount
-/vendor         ext4       vendor                                               display="Vendor";logical;first_stage_mount
-/odm            ext4       odm                                                  display="Odm";logical;first_stage_mount
-/system_ext     ext4       system_ext                                           display="System_ext";logical;first_stage_mount
-/vendor_dlkm    ext4       vendor_dlkm                                          display="Vendor_dlkm";logical;first_stage_mount
-/odm_dlkm       ext4       odm_dlkm                                             display="Odm_dlkm";logical;first_stage_mount
-/product        ext4       product                                              display="Product";logical;first_stage_mount
+# mount point       fstype    device                                                                flags
+/system             ext4      /dev/block/by-name/system             flags=display="System";backup=1;slotselect
+/vendor             ext4      /dev/block/by-name/vendor             flags=display="Vendor";backup=1;slotselect
+/odm                ext4      /dev/block/by-name/odm                flags=display="Odm";backup=1
+/product            ext4      /dev/block/by-name/product            flags=display="Product";backup=1
+/system_ext         ext4      /dev/block/by-name/system_ext         flags=display="System_ext";backup=1
+/vendor_dlkm        ext4      /dev/block/by-name/vendor_dlkm        flags=display="Vendor_dlkm";backup=1
+/odm_dlkm           ext4      /dev/block/by-name/odm_dlkm           flags=display="Odm_dlkm";backup=1
+/cache              ext4      /dev/block/by-name/cache              flags=display="Cache"
+/metadata           ext4      /dev/block/by-name/metadata           flags=display="Metadata"
+/data               f2fs      /dev/block/by-name/userdata           flags=encryptable=footer
+/cust               ext4      /dev/block/by-name/cust               flags=display="Cust";backup=1
+/custom             ext4      /dev/block/by-name/custom             flags=display="Custom";backup=1
 
-/metadata       ext4       /dev/block/by-name/metadata                          display="Metadata";wait;check;formattable
-/data           f2fs       /dev/block/by-name/userdata                          flags=display="Data";check;wait;formattable;quota
-/cache          ext4       /dev/block/by-name/cache                             display="Cache"
+# 闪存与底层镜像分区
+/boot               emmc      /dev/block/by-name/boot               flags=display="Boot";backup=1;flashimg=1
+/recovery           emmc      /dev/block/by-name/recovery           flags=display="Recovery";backup=1;flashimg=1
+/dtbo               emmc      /dev/block/by-name/dtbo               flags=display="Dtbo";backup=1;flashimg=1
+/vendor_boot        emmc      /dev/block/by-name/vendor_boot        flags=display="Vendor_Boot";backup=1;flashimg=1
+/vbmeta             emmc      /dev/block/by-name/vbmeta             flags=display="Vbmeta";backup=1;flashimg=1
+/misc               emmc      /dev/block/by-name/misc               flags=display="Misc";backup=1
 
-/boot           emmc       /dev/block/by-name/boot                              flags=display="Boot";backup=1;flashimg=1
-/recovery       emmc       /dev/block/by-name/recovery                          flags=display="Recovery";backup=1;flashimg=1
-/misc           emmc       /dev/block/by-name/misc                              flags=display="Misc";backup=1;flashimg=1
-
-/external_sd    auto       /devices/platform/fe2c0000.mmc/mmc_host* flags=display="MicroSD";storage;wipeui;removable
-/usb_otg        auto       /devices/platform/*usb* flags=display="USB-OTG";storage;wipeui;removable
+# 外部存储挂载
+/external_sd        vfat      /dev/block/mmcblk0p1                  flags=display="MicroSD";storage;wipeui;removable
