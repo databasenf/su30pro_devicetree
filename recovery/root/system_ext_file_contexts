@@ -1,3 +1,0 @@
-/data/misc/cfg_rockchip(/.*)?                   u:object_r:rockchip_config_data_file:s0
-/system/bin/stylus_broadcast.sh                   u:object_r:stylus_broadcast_exec:s0
-/system/bin/move_widevine_data\.sh              u:object_r:move-widevine-data-sh_exec:s0
